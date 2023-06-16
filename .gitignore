@@ -1,0 +1,19 @@
+# Ignora archivos del sistema Mac 
+.DS_store
+
+# Ignora la carpetas
+node_modules
+dist
+backups/*
+
+
+# Ignora todos los archivos 
+*.txt
+*.zip
+*.pdf
+
+# Ignora archivos de configuración SASS
+.sass-cache
+
+#Ignora archivos pdf
+.pdf

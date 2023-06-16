@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Access denied</title>
+</head>
+
+<body>
+    <h1>Access denied</h1>
+    <hr>
+    <div id="g_id_onload" data-client_id="515225460953-c7i2ec3mjg2rt8d98cq4kbr3l63h6l7n.apps.googleusercontent.com"
+        data-login_uri="https://your.domain/your_login_endpoint" data-auto_prompt="false"
+        data-callback="handleCredentialResponse">
+    </div>
+    <div class="g_id_signin" data-type="standard" data-size="large" data-theme="outline" data-text="sign_in_with"
+        data-shape="rectangular" data-logo_alignment="left">
+    </div>
+</body>
+<script src="./socket.io/socket.io.js"></script>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<script>
+    function handleCredentialResponse(response) {
+        //id:token
+        //console.log('ID token: ',response.credential)
+        const body = { id_token: response.credential }
+
+        fetch('http://localhost/api/auth/google', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(body)
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    console.log('Successfully logged in!')
+                    //window.location.href = '/'
+                } else {
+                    console.log('Failed to log in!')
+                }
+            })
+    }
+</script>
+
+<script>
+    const socket = io();
+
+    socket.on('connect', () => {
+        console.log("Conectado")
+    })
+
+    socket.on('disconnect', () => {
+        console.log("desconectado del server")
+    }) 
+</script>
+
+</html>
